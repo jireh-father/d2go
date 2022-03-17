@@ -9,6 +9,7 @@ import logging
 import sys
 
 import detectron2.utils.comm as comm
+from detectron2.data.datasets.coco import register_coco_instances
 from d2go.distributed import launch
 from d2go.setup import (
     basic_argument_parser,
@@ -19,19 +20,33 @@ from d2go.setup import (
 from d2go.utils.misc import print_metrics_table, dump_trained_model_configs
 from detectron2.engine.defaults import create_ddp_model
 
-
 logger = logging.getLogger("d2go.tools.train_net")
 
 
 def main(
-    cfg,
-    output_dir,
-    runner=None,
-    eval_only=False,
-    # NOTE: always enable resume when running on cluster
-    resume=True,
+        cfg,
+        output_dir,
+        runner=None,
+        eval_only=False,
+        # NOTE: always enable resume when running on cluster
+        resume=True,
 ):
     setup_after_launch(cfg, output_dir, runner)
+
+    if cfg.custom_train_dataset:
+        register_coco_instances(
+            cfg.custom_train_dataset,
+            {},
+            cfg.custom_train_json,
+            cfg.custom_train_root
+        )
+    if cfg.custom_val_dataset:
+        register_coco_instances(
+            cfg.custom_val_dataset,
+            {},
+            cfg.custom_val_json,
+            cfg.custom_val_root
+        )
 
     model = runner.build_model(cfg)
     logger.info("Model:\n{}".format(model))
@@ -100,6 +115,13 @@ def cli(args):
         action="store_true",
         help="whether to attempt to resume from the checkpoint directory",
     )
+    parser.add_argument("--custom_train_dataset", default=None, type=str)
+    parser.add_argument("--custom_val_dataset", default=None, type=str)
+    parser.add_argument("--custom_train_root", default=None, type=str)
+    parser.add_argument("--custom_train_json", default=None, type=str)
+    parser.add_argument("--custom_val_root", default=None, type=str)
+    parser.add_argument("--custom_val_json", default=None, type=str)
+
     run_with_cmdline_args(parser.parse_args(args))
 
 
