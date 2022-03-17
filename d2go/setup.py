@@ -173,7 +173,7 @@ def prepare_for_launch(args):
         cfg.merge_from_list(args.opts)
     else:
         cfg = create_cfg_from_cli_args(args, default_cfg=cfg)
-    # cfg.freeze()
+    cfg.freeze()
 
     assert args.output_dir or args.config_file
     output_dir = args.output_dir or cfg.OUTPUT_DIR
