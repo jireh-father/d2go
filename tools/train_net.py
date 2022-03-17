@@ -115,12 +115,12 @@ def cli(args):
         action="store_true",
         help="whether to attempt to resume from the checkpoint directory",
     )
-    parser.add_argument("--custom_train_dataset", default=None, type=str)
-    parser.add_argument("--custom_val_dataset", default=None, type=str)
-    parser.add_argument("--custom_train_root", default=None, type=str)
-    parser.add_argument("--custom_train_json", default=None, type=str)
-    parser.add_argument("--custom_val_root", default=None, type=str)
-    parser.add_argument("--custom_val_json", default=None, type=str)
+    # parser.add_argument("--custom_train_dataset", default=None, type=str)
+    # parser.add_argument("--custom_val_dataset", default=None, type=str)
+    # parser.add_argument("--custom_train_root", default=None, type=str)
+    # parser.add_argument("--custom_train_json", default=None, type=str)
+    # parser.add_argument("--custom_val_root", default=None, type=str)
+    # parser.add_argument("--custom_val_json", default=None, type=str)
 
     run_with_cmdline_args(parser.parse_args(args))
 
