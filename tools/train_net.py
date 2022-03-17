@@ -30,22 +30,23 @@ def main(
         eval_only=False,
         # NOTE: always enable resume when running on cluster
         resume=True,
+        args=None
 ):
     setup_after_launch(cfg, output_dir, runner)
 
-    if cfg.custom_train_dataset:
+    if args.custom_train_dataset:
         register_coco_instances(
-            cfg.custom_train_dataset,
+            args.custom_train_dataset,
             {},
-            cfg.custom_train_json,
-            cfg.custom_train_root
+            args.custom_train_json,
+            args.custom_train_root
         )
-    if cfg.custom_val_dataset:
+    if args.custom_val_dataset:
         register_coco_instances(
-            cfg.custom_val_dataset,
+            args.custom_val_dataset,
             {},
-            cfg.custom_val_json,
-            cfg.custom_val_root
+            args.custom_val_json,
+            args.custom_val_root
         )
 
     model = runner.build_model(cfg)
@@ -101,7 +102,7 @@ def run_with_cmdline_args(args):
         machine_rank=args.machine_rank,
         dist_url=args.dist_url,
         backend=args.dist_backend,
-        args=(cfg, output_dir, runner, args.eval_only, args.resume),
+        args=(cfg, output_dir, runner, args.eval_only, args.resume, args),
     )
 
 
