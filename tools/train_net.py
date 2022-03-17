@@ -34,20 +34,20 @@ def main(
 ):
     setup_after_launch(cfg, output_dir, runner)
 
-    if args.custom_train_dataset:
-        register_coco_instances(
-            args.custom_train_dataset,
-            {},
-            args.custom_train_json,
-            args.custom_train_root
-        )
-    if args.custom_val_dataset:
-        register_coco_instances(
-            args.custom_val_dataset,
-            {},
-            args.custom_val_json,
-            args.custom_val_root
-        )
+    # if args.custom_train_dataset:
+    #     register_coco_instances(
+    #         args.custom_train_dataset,
+    #         {},
+    #         args.custom_train_json,
+    #         args.custom_train_root
+    #     )
+    # if args.custom_val_dataset:
+    #     register_coco_instances(
+    #         args.custom_val_dataset,
+    #         {},
+    #         args.custom_val_json,
+    #         args.custom_val_root
+    #     )
 
     model = runner.build_model(cfg)
     logger.info("Model:\n{}".format(model))
