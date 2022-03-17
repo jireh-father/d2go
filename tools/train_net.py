@@ -93,8 +93,13 @@ def main(
 
 
 def run_with_cmdline_args(args):
-    print(args.opts)
     cfg, output_dir, runner = prepare_for_launch(args)
+    cfg.custom_train_dataset = args.custom_train_dataset
+    cfg.custom_val_dataset = args.custom_val_dataset
+    cfg.custom_train_root = args.custom_train_root
+    cfg.custom_train_json = args.custom_train_json
+    cfg.custom_val_root = args.custom_val_root
+    cfg.custom_val_json = args.custom_val_json
     launch(
         post_mortem_if_fail_for_main(main),
         num_processes_per_machine=args.num_processes,
@@ -116,12 +121,12 @@ def cli(args):
         action="store_true",
         help="whether to attempt to resume from the checkpoint directory",
     )
-    # parser.add_argument("--custom_train_dataset", default=None, type=str)
-    # parser.add_argument("--custom_val_dataset", default=None, type=str)
-    # parser.add_argument("--custom_train_root", default=None, type=str)
-    # parser.add_argument("--custom_train_json", default=None, type=str)
-    # parser.add_argument("--custom_val_root", default=None, type=str)
-    # parser.add_argument("--custom_val_json", default=None, type=str)
+    parser.add_argument("--custom_train_dataset", default=None, type=str)
+    parser.add_argument("--custom_val_dataset", default=None, type=str)
+    parser.add_argument("--custom_train_root", default=None, type=str)
+    parser.add_argument("--custom_train_json", default=None, type=str)
+    parser.add_argument("--custom_val_root", default=None, type=str)
+    parser.add_argument("--custom_val_json", default=None, type=str)
 
     run_with_cmdline_args(parser.parse_args(args))
 
