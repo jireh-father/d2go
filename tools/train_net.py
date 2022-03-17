@@ -93,6 +93,7 @@ def main(
 
 
 def run_with_cmdline_args(args):
+    print(args.opts)
     cfg, output_dir, runner = prepare_for_launch(args)
     launch(
         post_mortem_if_fail_for_main(main),
